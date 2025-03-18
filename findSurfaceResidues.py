@@ -81,6 +81,12 @@ RETURNS
     if not quiet:
         print("Exposed residues are selected in: " + selNameRes)
 
+    # 新增代码：收集并打印暴露氨基酸ID
+    resid = []
+    cmd.iterate(selNameRes + " and name CA", "resid.append(resi)", space=locals())
+    resi_s = "','".join(resid)
+    print(resi_s)
+
     if doShow:
         cmd.show_as("spheres", "(" + selection + ") and polymer")
         cmd.color("white", selection)
@@ -89,5 +95,4 @@ RETURNS
 
     return sorted(exposed)
 
-cmd.extend("findSurfaceAtoms", findSurfaceAtoms)
 cmd.extend("findSurfaceResidues", findSurfaceResidues)
